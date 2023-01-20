@@ -4,7 +4,7 @@ import { PokemonCard } from "./PokemonCard"
 const gen1Url = 'https://pokeapi.co/api/v2/generation/1'
 const gent2Url = 'https://pokeapi.co/api/v2/generation/2'
 
-export const MatchMaking = () => {
+export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
     const [requestStatus, setRequestStatus] = useState('loading')
     useEffect(() => {
         Promise.all([fetch(gen1Url), fetch(gent2Url)])
@@ -26,13 +26,12 @@ export const MatchMaking = () => {
             })
     }, [])
 
-    const [selectedPokemon, setSelectedPokemon] = useState([])
     const tooglePokemonSelectedFactory = (pokemonName) => () => {
-            setSelectedPokemon(list => {
+            setSelectedPokemon(selectedPokemon => {
                 if(selectedPokemon.includes(pokemonName)) {
-                    return list.filter(name => name !== pokemonName);
+                    return selectedPokemon.filter(name => name !== pokemonName);
                 }
-                return [...list, pokemonName];
+                return [...selectedPokemon, pokemonName];
             })
     }
 

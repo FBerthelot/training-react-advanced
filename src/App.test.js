@@ -19,10 +19,13 @@ describe('Pokemon App', () => {
           }
         })
       })
+
+      jest.useFakeTimers()
   })
 
   afterEach(() => {
     jest.spyOn(window, 'fetch').mockClear()
+    jest.useRealTimers()
   })
 
 
@@ -75,5 +78,18 @@ describe('Pokemon App', () => {
     fireEvent.click(screen.getByText(/pikachu/i));
 
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked()
+  })
+
+  it('should start the battle when selecting 2 pokemon', async () => {
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
+    })
+
+    fireEvent.click(screen.getByText(/pikachu/i));
+    fireEvent.click(screen.getByText(/salamèche/i));
+
+    expect(screen.getByText(/pikachu -.100.PV/i)).toBeInTheDocument()
   })
 })
