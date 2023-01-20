@@ -23,3 +23,11 @@
 .pokemon-card:hover {
   transform: scale(1.1);
 }
+
+.tooltip {
+  position: absolute;
+  background-color: aqua;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  z-index: 1;
+}

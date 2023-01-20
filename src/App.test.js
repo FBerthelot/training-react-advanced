@@ -1,5 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 describe('Pokemon App', () => {
@@ -20,6 +19,10 @@ describe('Pokemon App', () => {
           }
         })
       })
+  })
+
+  afterEach(() => {
+    jest.spyOn(window, 'fetch').mockClear()
   })
 
 
@@ -56,7 +59,7 @@ describe('Pokemon App', () => {
 
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked()
 
-    userEvent.click(screen.getByText(/pikachu/i));
+    fireEvent.click(screen.getByText(/pikachu/i));
 
     expect(screen.getAllByRole('checkbox')[0]).toBeChecked()
   })
@@ -68,8 +71,8 @@ describe('Pokemon App', () => {
       expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
     })
 
-    userEvent.click(screen.getByText(/pikachu/i));
-    userEvent.click(screen.getByText(/pikachu/i));
+    fireEvent.click(screen.getByText(/pikachu/i));
+    fireEvent.click(screen.getByText(/pikachu/i));
 
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked()
   })

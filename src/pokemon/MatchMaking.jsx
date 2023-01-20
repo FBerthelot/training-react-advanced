@@ -16,8 +16,8 @@ export const MatchMaking = () => {
             })
             .then(([data1, data2]) => {
                 setRequestStatus([
-                    ...data1.pokemon_species.map(species => ({name: species.name, generation: 1})),
-                    ...data2.pokemon_species.map(species => ({name: species.name, generation: 2}))
+                    ...data1.pokemon_species.map(species => ({name: species.name, generation: 1, url: species.url})),
+                    ...data2.pokemon_species.map(species => ({name: species.name, generation: 2, url: species.url}))
                 ])
             })
             .catch(err => {
