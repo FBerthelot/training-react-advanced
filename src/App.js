@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import './App.css';
+import { ErrorBoundary } from './ErrorBoundary';
 import { Battle } from './pokemon/Battle';
 import { MatchMaking } from './pokemon/MatchMaking';
 
 function App() {
+  
   const [selectedPokemon, setSelectedPokemon] = useState([])
 
 
   return (
-    <>
+    <ErrorBoundary>
       <header className="header">
         <h1>Formation React Avancé !</h1>
       </header>
@@ -19,7 +21,7 @@ function App() {
           <MatchMaking setSelectedPokemon={setSelectedPokemon} selectedPokemon={selectedPokemon}/>
         }
       </main>
-    </>
+    </ErrorBoundary>
   );
 }
 

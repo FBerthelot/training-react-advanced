@@ -36,6 +36,7 @@ export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
     }
 
     if(requestStatus === 'loading') {
+        // throw new Error('Une erreur sauvage apparait !');
         return (
             <section className="matchmaking">
                 Chargement...
