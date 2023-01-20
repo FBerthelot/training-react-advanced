@@ -11,9 +11,15 @@
 }
 
 .pokemon-card {
-  width: 8rem;
-  height: 8rem;
+  width: 9rem;
+  height: 9rem;
   border: 1px solid black;
   border-radius: 0.5rem;
   text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.1);
 }
