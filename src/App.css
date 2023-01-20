@@ -2,3 +2,18 @@
   padding: 1rem;
   background-color: beige;
 }
+
+.matchmaking {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.pokemon-card {
+  width: 8rem;
+  height: 8rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  text-align: center;
+}

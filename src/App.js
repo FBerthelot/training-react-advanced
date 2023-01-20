@@ -1,10 +1,11 @@
 import './App.css';
+import { PokemonCard } from './pokemon/PokemonCard';
 
 function App() {
   const pokemons = [
-    "pikachu",
-    "salamèche",
-    "dracofeu"
+    {name: "pikachu", generation: 1},
+    {name: "salamèche", generation: 1},
+    {name: "dracofeu", generation: 1}
   ]
 
   return (
@@ -12,11 +13,11 @@ function App() {
       <header className="header">
         <h1>Formation React Avancé !</h1>
       </header>
-      <ul>
+      <main className='matchmaking'>
         {pokemons.map((pokemon) => {
-          return <li key={pokemon}>{pokemon}</li>
+          return <PokemonCard key={pokemon.name} pokemon={pokemon}/>
         })}
-      </ul>
+      </main>
     </>
   );
 }
