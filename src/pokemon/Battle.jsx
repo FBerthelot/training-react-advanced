@@ -17,6 +17,7 @@ export const Battle = ({pok1, pok2}) => {
 
     return (
     <section>
+        <p>Le combat a commencé depuis {battleState.duration}s</p>
         <ul>
             <li>
                 {battleState.attacker.name} - {battleState.attacker.hp} PV

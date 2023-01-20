@@ -13,6 +13,7 @@ const reducer = (state, action) => {
                     hp: 100,
                     name: action.payload.pok2
                 },
+                duration: 0,
                 nextMove: 'attacker',
                 winner: null
             }
@@ -23,6 +24,7 @@ const reducer = (state, action) => {
                     ...state[state.nextMove],
                     hp: state[state.nextMove].hp - 10
                 },
+                duration: state.duration + 1,
                 nextMove: state.nextMove === 'defender' ? 'attacker' : 'defender',
                 winner: state[state.nextMove].hp - 10 > 0 ?
                     null :
@@ -37,7 +39,10 @@ const reducer = (state, action) => {
 export const useBattle = () => {
     const [state, dispatch] = useReducer(reducer, {
         attacker: undefined,
-        defender: undefined
+        defender: undefined,
+        winner: null,
+        nextMove: null,
+        duration: 0
     })
 
     const fightHasStarted = state.attacker && state.defender
@@ -62,6 +67,7 @@ export const useBattle = () => {
         defender: state.defender,
         fightHasStarted,
         winner: state.winner,
+        duration: state.duration,
         startBattle
     }
 }
