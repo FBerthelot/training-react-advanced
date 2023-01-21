@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 describe('Pokemon App', () => {
@@ -25,7 +25,10 @@ describe('Pokemon App', () => {
 
   afterEach(() => {
     jest.spyOn(window, 'fetch').mockClear()
-    jest.useRealTimers()
+    act(() => {
+      jest.runOnlyPendingTimers()
+      jest.useRealTimers()
+    })
   })
 
 

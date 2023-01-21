@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
 import { PokemonCard } from "./PokemonCard"
 
 const gen1Url = 'https://pokeapi.co/api/v2/generation/1'
 const gent2Url = 'https://pokeapi.co/api/v2/generation/2'
 
 export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
-    const [requestStatus, setRequestStatus] = useState('loading')
-    useEffect(() => {
-        Promise.all([fetch(gen1Url), fetch(gent2Url)])
+    const { isLoading, error, data } =  useQuery('pokemonList', () => {
+        return Promise.all([fetch(gen1Url), fetch(gent2Url)])
             .then(([res1, res2]) => {
                 if(!res1.ok || !res2.ok) {
                     throw new Error('Request failed')
@@ -15,14 +14,10 @@ export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
                 return Promise.all([res1.json(), res2.json()])
             })
             .then(([data1, data2]) => {
-                setRequestStatus([
+                return [
                     ...data1.pokemon_species.map(species => ({name: species.name, generation: 1, url: species.url})),
                     ...data2.pokemon_species.map(species => ({name: species.name, generation: 2, url: species.url}))
-                ])
-            })
-            .catch(err => {
-                console.error(err);
-                setRequestStatus('error')
+                ]
             })
     }, [])
 
@@ -35,7 +30,7 @@ export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
             })
     }
 
-    if(requestStatus === 'loading') {
+    if(isLoading) {
         // throw new Error('Une erreur sauvage apparait !');
         return (
             <section className="matchmaking">
@@ -44,7 +39,7 @@ export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
         );
     }
 
-    if(requestStatus === 'error') {
+    if(error) {
         return (
             <section className="matchmaking">
                 Impossible de récupérer les pokémons.
@@ -53,7 +48,7 @@ export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
         );
     }
 
-    const pokemons = requestStatus;
+    const pokemons = data;
 
     return (
         <section className="matchmaking">

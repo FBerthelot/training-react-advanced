@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 
 import { PokemonCard } from './PokemonCard';
@@ -30,7 +30,7 @@ describe('Pokemon Card', () => {
         })
       })
 
-    render(<PokemonCard selected onSelect={jest.fn()} pokemon={{name: 'Pikachu', generation: 2}} />);
+    render(<PokemonCard selected onSelect={jest.fn()} pokemon={{name: 'Pikachu', generation: 2, url: "toto"}} />);
 
     userEvent.hover(screen.getByRole('heading'))
 

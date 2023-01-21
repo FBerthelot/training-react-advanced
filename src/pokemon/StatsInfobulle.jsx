@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { useQuery } from "react-query"
 
 export const StatsInfobulle = ({
     isOpen,
@@ -26,22 +27,12 @@ export const StatsInfobulle = ({
     }, [floatingBoxRef, isOpen])
 
 
-    const [requestStatus, setRequestStatus] = useState('loading')
-    useEffect(() => {
-        fetch(url)
-            .then((res) => {
-                if(!res.ok) {
-                    throw new Error('Request failed')
-                }
-                return res.json()
-            })
-            .then((data) => {
-                setRequestStatus(data)
-            })
-            .catch(err => {
-                console.error(err);
-                setRequestStatus('error')
-            })
+    const { isLoading, error, data }  = useQuery(url,  async () => {
+        const res = await fetch(url)
+        if (!res.ok) {
+            throw new Error('Request failed')
+        }
+        return await res.json()
     }, [url])
 
     if(!isOpen) {
@@ -57,12 +48,12 @@ export const StatsInfobulle = ({
                 top: `${y}px`,
             }}
         >
-            {requestStatus === 'loading' && 'chargement...'}
-            {requestStatus === 'error' && 'Oopsy...'}
-            {!['loading', 'error'].includes(requestStatus) && (
+            {isLoading && 'chargement...'}
+            {error && 'Oopsy...'}
+            {data && (
                 <ul>
-                    <li>Bonheur: {requestStatus.base_happiness}</li>
-                    <li>Ratio de capture:  {requestStatus.capture_rate}</li>
+                    <li>Bonheur: {data.base_happiness}</li>
+                    <li>Ratio de capture:  {data.capture_rate}</li>
                 </ul>
             )}
         </div>
