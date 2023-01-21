@@ -1,10 +1,11 @@
 import { useQuery } from "react-query"
+import { useMatchMakingContextProvider } from "./MatchMaking.context"
 import { PokemonCard } from "./PokemonCard"
 
 const gen1Url = 'https://pokeapi.co/api/v2/generation/1'
 const gent2Url = 'https://pokeapi.co/api/v2/generation/2'
 
-export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
+export const MatchMaking = () => {
     const { isLoading, error, data } =  useQuery('pokemonList', () => {
         return Promise.all([fetch(gen1Url), fetch(gent2Url)])
             .then(([res1, res2]) => {
@@ -21,13 +22,9 @@ export const MatchMaking = ({setSelectedPokemon, selectedPokemon}) => {
             })
     }, [])
 
+    const {selectedPokemon, handleTogglePokemon} = useMatchMakingContextProvider()
     const tooglePokemonSelectedFactory = (pokemonName) => () => {
-            setSelectedPokemon(selectedPokemon => {
-                if(selectedPokemon.includes(pokemonName)) {
-                    return selectedPokemon.filter(name => name !== pokemonName);
-                }
-                return [...selectedPokemon, pokemonName];
-            })
+        handleTogglePokemon(pokemonName)
     }
 
     if(isLoading) {

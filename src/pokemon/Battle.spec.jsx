@@ -1,5 +1,6 @@
 import { act, render, screen, waitFor } from '../test-utils';
 import { Battle } from './Battle';
+import { MatchMakingContextProvider } from './MatchMaking.context';
 
 describe('Battle', () => {
   beforeEach(() => {
@@ -11,7 +12,11 @@ describe('Battle', () => {
   })
 
   it('should make each pokemon start with 100 PV', async () => {
-    render(<Battle pok1="pikachu" pok2="salamèche" />);
+    render(
+        <MatchMakingContextProvider value={{selectedPokemon: ["pikachu", "salamèche"]}}>
+            <Battle />
+        </MatchMakingContextProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
@@ -22,7 +27,11 @@ describe('Battle', () => {
   })
 
   it('should always make the defender win', async () => {
-    render(<Battle pok1="pikachu" pok2="salamèche" />);
+    render(
+        <MatchMakingContextProvider value={{selectedPokemon: ["pikachu", "salamèche"]}}>
+            <Battle />
+        </MatchMakingContextProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(/pikachu/i)).toBeInTheDocument();

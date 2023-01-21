@@ -1,14 +1,16 @@
 import { useEffect } from "react"
 import { useBattle } from "./Battle.logic"
+import { useMatchMakingContextProvider } from "./MatchMaking.context"
 
 
 export const Battle = ({pok1, pok2}) => {
     const battleState = useBattle()
+    const {selectedPokemon} = useMatchMakingContextProvider()
 
     useEffect(() => {
-        battleState.startBattle(pok1, pok2)
+        battleState.startBattle(selectedPokemon[0], selectedPokemon[1])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pok1, pok2])
+    }, [selectedPokemon[0], selectedPokemon[1]])
 
     if(!battleState.fightHasStarted) {
         return 'Le combat commence !'
